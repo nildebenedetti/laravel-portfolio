@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,9 @@ Route::middleware([ 'auth', 'verified' ])
 
 
 Route::resource("posts", PostController::class)
+    ->middleware("auth", "verified");
+
+Route::resource("projects", ProjectController::class)
     ->middleware("auth", "verified");
 
 require __DIR__.'/auth.php';
