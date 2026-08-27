@@ -36,9 +36,24 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Post $post) // LA BEST PRACTICE: sostituire la stringa con lístanza post
+    // questo fa si che in automatica si vada pescare post con quellíd
+    // senza scrivere nulla dentro la funzione
     {
-        //
+        // se tengo il parametro in entrata come da preimpostato
+        // OVVERO => public function show(string $id)
+        // questo modo più prolisso
+        // $post = Post::where("id", $id)->first();
+        // questo pure funziona
+        // $post = Post::find($id);
+
+        //LA BEST PRACTICE È CAMBIARE IL PARAMETRO IN INGRESSO
+        // CREANDO COSÌ UNA ROTTA DINAMICA
+
+        return view("posts.show", compact("post"));
+
+
+        dd($post);
     }
 
     /**
