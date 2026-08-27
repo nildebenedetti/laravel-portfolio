@@ -21,6 +21,9 @@
             <p>
                 {{ $post->category }}
             </p>
+            <div>
+                <a href="{{ route("posts.show", $post) }}"> Visualizza</a>
+            </div>
         </li>
 
         @endforeach
