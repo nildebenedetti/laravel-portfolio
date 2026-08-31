@@ -12,5 +12,5 @@ class Project extends Model
         'tech_stack',
         'client',
         'description'
-    ]
+    ];
 }
