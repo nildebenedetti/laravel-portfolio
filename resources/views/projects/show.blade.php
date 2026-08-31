@@ -10,6 +10,12 @@
         </a>
     </div>
 
+    <!-- edit & delete buttons -->
+    <div class="d-flex py-4 gap-2">
+        <a class="btn btn-outline-warning" href="{{ route('projects.edit', $project) }}">Edit</a>
+
+    </div>
+
     <div class="row g-4 justify-content-center">
         
         <!-- Main Column: Description and GitHub Call to Action -->
