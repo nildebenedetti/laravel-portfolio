@@ -32,6 +32,10 @@
             <textarea id="description" name="description" rows="10" ></textarea>
         </div>
     </div>
+    <div class="btn-wrapper d-flex justify-content-end pt-4">
+        <button type="submit" action class="btn btn-outline-primary px-3">Save</button>
+    </div>        
+    
         
 </form>
 @endsection
