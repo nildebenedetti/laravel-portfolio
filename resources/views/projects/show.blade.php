@@ -35,7 +35,7 @@
                         </span>
                         <!-- tech stack -->
                         <span class="badge bg-violet rounded-pill tech-secondary-font px-3 py-2 mt-2">
-                            {{ $project->{'tech stack'} }}
+                            {{ $project->tech_stack }}
                         </span>
                     </div>
                     
@@ -47,7 +47,7 @@
                         <h5 class="mb-1 fw-bold text-dark">Project Repository</h5>
                         <p class="text-muted small mb-0">Inspect the full source code on GitHub.</p>
                     </div>
-                    <a href="{{ $project->{'github link'} }}" 
+                    <a href="{{ $project->github_link }}" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         class="btn btn-dark btn-lg px-4 shadow-sm flex-shrink-0">
@@ -83,11 +83,11 @@
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3">
                         <small class="text-muted d-block">Tech Stack</small>
-                        <span class="fw-semibold text-primary">{{ $project->{'tech stack'} }}</span>
+                        <span class="fw-semibold text-primary">{{ $project->tech_stack }}</span>
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3 border-bottom-0">
                         <small class="text-muted d-block mb-1">Direct Link</small>
-                        <a href="{{ $project->{'github link'} }}" target="_blank" class="text-break small">
+                        <a href="{{ $project->github_link }}" target="_blank" class="text-break small">
                             {{ $project->{'github link'} }}
                         </a>
                     </li>

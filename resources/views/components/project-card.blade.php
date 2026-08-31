@@ -15,7 +15,7 @@
         {{-- Tech Stack Badge --}}
         <div class="mb-3">
             <span class="tech-secondary-font bg-violet rounded-pill text-light px-3 py-2 fw-medium">
-            {{ $project->{'tech stack'} }}
+            {{ $project->tech_stack }}
             </span>
         </div>
 
@@ -27,7 +27,7 @@
 
     {{-- Footer with show --}}
     <div class="card-footer bg-transparent border-top-0 pt-0 pb-3">
-        <a href="{{ route("projects.show", $project) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm w-100">
+        <a href="{{ route('projects.show', $project) }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark btn-sm w-100">
             Show more
         </a>
     </div>
