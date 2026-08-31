@@ -13,6 +13,9 @@
     <!-- edit & delete buttons -->
     <div class="d-flex py-4 gap-2">
         <a class="btn btn-outline-warning" href="{{ route('projects.edit', $project) }}">Edit</a>
+        <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Delete
+        </button>
 
     </div>
 
@@ -93,6 +96,38 @@
                     </li>
                 </ul>
             </div>
+    </div>
+</div>
+
+
+<!-- Modal for delete-->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel-{{ $project->id }}">Delete Project</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Do you wish to proceed with deletion of Project <strong>"{{ $project->title }}"</strong>?
+            </div>
+
+            <div class="modal-footer">
+                {{-- Bottone per annullare --}}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                {{-- Form effettivo di eliminazione --}}
+                <form action="{{ route('projects.destroy', $project) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete permanently</button>
+                </form>
+            </div>
+
+        </div>
     </div>
 </div>
 @endsection
