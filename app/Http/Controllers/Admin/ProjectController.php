@@ -31,7 +31,19 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return dd($request->all());
+        $data = $request->all(); // save request data in associative array
+        
+        $newProject = new Project; // instantiate new row in db for Project Table
+        $newProject->title = $data['title']; //assign saved data to field
+        $newProject->{'tech stack'} = $data['tech_stack'];
+        $newProject->{'github link'} = $data['github_link'];
+        $newProject->client = $data['client'];
+        $newProject->description = $data['description'];
+
+        $newProject->save(); // save in the db
+
+        return redirect()->route("projects.show", $newProject); //return redirect to show post page
+
     }
 
     /**
