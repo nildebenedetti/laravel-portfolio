@@ -1,3 +1,26 @@
+/*====== IMPORTS =====*/
+
+/* Import Bootstrap */
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+/*===================*/
+
+
+/* Main Font */
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Utilities */
+.tech-secondary-font {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem;
+}
+
+.bg-violet {
+    background-color: rgb(92, 2, 92);
+}
+
 /* Card */
 .project-card {
     border-radius: 12px;

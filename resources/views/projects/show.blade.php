@@ -18,18 +18,21 @@
                 
                 <!-- Project Header -->
                 <div class="border-bottom pb-4 mb-4">
-                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
-                        <span class="badge bg-light text-secondary border px-3 py-2">
-                            Client: {{ $project->client }}
-                        </span>
-                        <span class="badge bg-primary rounded-pill px-3 py-2">
-                            {{ $project->{'tech stack'} }}
-                        </span>
-                    </div>
-
+                    
+                    <!-- Project Title --> 
                     <h1 class="display-5 fw-bold text-dark text-capitalize mt-3">
                         {{ $project->title }}
                     </h1>
+                    <div class="d-flex flex-column align-items-start justify-content-start gap-2 mb-2">
+                        <span class="text-secondary">
+                            Client: {{ $project->client }}
+                        </span>
+                        <!-- tech stack -->
+                        <span class="badge bg-violet rounded-pill tech-secondary-font px-3 py-2 mt-2">
+                            {{ $project->{'tech stack'} }}
+                        </span>
+                    </div>
+                    
                 </div>
 
                 <!-- GitHub Repository Box -->
@@ -39,9 +42,9 @@
                         <p class="text-muted small mb-0">Inspect the full source code on GitHub.</p>
                     </div>
                     <a href="{{ $project->{'github link'} }}" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="btn btn-dark btn-lg px-4 shadow-sm flex-shrink-0">
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="btn btn-dark btn-lg px-4 shadow-sm flex-shrink-0">
                         View on GitHub
                     </a>
                 </div>

@@ -14,7 +14,7 @@
 
         {{-- Tech Stack Badge --}}
         <div class="mb-3">
-            <span class="badge bg-primary rounded-pill px-3 py-2 fw-medium">
+            <span class="tech-secondary-font bg-violet rounded-pill text-light px-3 py-2 fw-medium">
             {{ $project->{'tech stack'} }}
             </span>
         </div>
