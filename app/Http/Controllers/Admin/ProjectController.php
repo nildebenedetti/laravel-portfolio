@@ -35,8 +35,8 @@ class ProjectController extends Controller
         
         $newProject = new Project; // instantiate new row in db for Project Table
         $newProject->title = $data['title']; //assign saved data to field
-        $newProject->{'tech stack'} = $data['tech_stack'];
-        $newProject->{'github link'} = $data['github_link'];
+        $newProject->tech_stack = $data['tech_stack'];
+        $newProject->github_link = $data['github_link'];
         $newProject->client = $data['client'];
         $newProject->description = $data['description'];
 
@@ -65,9 +65,19 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        $data = $request->all(); //extract data from request
+
+        //then update all fields with update method
+        $project->update($data);
+        
+        // dd($data);
+        // we do not need to save as ->save() creates
+        // a new row in db, which is NOT needed
+
+        // so we proceed redirecting
+        return redirect()->route('projects.show', $project);
     }
 
     /**
