@@ -13,13 +13,13 @@
         </div>
         <!-- tech stack -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
-            <label for="tech stack" class="py-2">Tech Stack</label>
-            <input type="text" id="tech stack" name="tech stack">
+            <label for="tech_stack" class="py-2">Tech Stack</label>
+            <input type="text" id="tech_stack" name="tech_stack">
         </div>
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
-            <label for="github link" class="py-2">Github Link</label>
-            <input type="text" id="github link" name="github link">
+            <label for="github_link" class="py-2">Github Link</label>
+            <input type="text" id="github_link" name="github_link">
         </div>
         <!-- client -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
