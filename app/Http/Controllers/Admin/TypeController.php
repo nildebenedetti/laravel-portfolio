@@ -40,7 +40,7 @@ class TypeController extends Controller
 
         $newType->save();
 
-        return redirect()->route('types.show', 'newType');
+        return redirect()->route('types.show', $newType);
     }
 
     /**
