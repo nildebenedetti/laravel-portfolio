@@ -11,6 +11,18 @@
             <label for="title" class="py-2">Title</label>
             <input type="text" id="title" name="title">
         </div>
+        <!-- type selection -->
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
+            <label for="type_id" class="py-2">Category</label>
+            <select name="type_id" id="type_id" class="py-1">
+                <option value="">select a suitable category</option>
+                @foreach ($types as $type) 
+                <option value="{{ $type->id }}">
+                    {{ $type->name }}
+                </option>
+                @endforeach
+            </select>
+</div>
         <!-- tech stack -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="tech_stack" class="py-2">Tech Stack</label>
