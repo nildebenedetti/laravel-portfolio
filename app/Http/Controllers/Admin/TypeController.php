@@ -54,9 +54,9 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Type $type)
     {
-        //
+        return view('types.edit', compact('type'));
     }
 
     /**
@@ -64,7 +64,7 @@ class TypeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return "ciao sono la update di types";
     }
 
     /**
