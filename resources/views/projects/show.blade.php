@@ -32,6 +32,9 @@
                     <h1 class="display-5 fw-bold text-dark text-capitalize mt-3">
                         {{ $project->title }}
                     </h1>
+                    <h5 class="text-secondary"> 
+                        {{ $project->type->name }}
+                    </h5>
                     <div class="d-flex flex-column align-items-start justify-content-start gap-2 mb-2">
                         <span class="text-secondary">
                             Client: {{ $project->client }}
