@@ -31,15 +31,24 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        
+        $newType = new Type;
+
+        $newType->name = $data['name'];
+        $newType->description = $data['description'];
+
+        $newType->save();
+
+        return view('types.show', 'newType');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Type $type)
     {
-        //
+        return view("types.show", compact('type'));
     }
 
     /**
