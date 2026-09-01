@@ -40,7 +40,7 @@ class TypeController extends Controller
 
         $newType->save();
 
-        return view('types.show', 'newType');
+        return redirect()->route('types.show', 'newType');
     }
 
     /**
@@ -62,9 +62,13 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Type $type)
     {
-        return "ciao sono la update di types";
+        $data = $request->all();
+
+        $type->update($data);
+
+        return redirect()->route('types.show', $type);
     }
 
     /**
