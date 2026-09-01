@@ -35,4 +35,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal for delete-->
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel-{{ $type->id }}">Delete Category</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Do you wish to proceed with deletion of Category <strong>"{{ $type->name }}"</strong>?
+            </div>
+
+            <div class="modal-footer">
+                {{-- cancel btn --}}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+                {{-- Form for effective deletion --}}
+                <form action="{{ route('types.destroy', $type) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete permanently</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
 @endsection
