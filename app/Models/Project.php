@@ -8,6 +8,7 @@ class Project extends Model
 {
     protected $fillable = [
         'title',
+        'type_id',
         'github_link',
         'tech_stack',
         'client',
