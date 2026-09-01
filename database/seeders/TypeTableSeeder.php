@@ -15,7 +15,7 @@ class TypeTableSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        $types = ['eCommerce', 'Showcase Website', 'AI', 'API Service', 'CRM'];
+        $types = ['eCommerce', 'Showcase Website', 'AI', 'API Service', 'CRM / ERP'];
 
         foreach ($types as $type) {
 
