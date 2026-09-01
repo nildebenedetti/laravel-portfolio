@@ -3,7 +3,7 @@
 @section("title", "add a new category")
 
 @section("content")
-<form action="" method="POST" class="pt-4">
+<form action="{{ route('types.store')}}" method="POST" class="pt-4">
     <div class="row d-flex justify-content-start">
     <!-- Name -->
     <div class="col col-sm-12 col-lg-6 col-xl-4 d-flex flex-column">
