@@ -19,7 +19,7 @@
     </div>
     <!-- submit btn -->
     <div class="btn-wrapper d-flex justify-content-end pt-4">
-        <button type="submit" action class="btn btn-outline-primary px-3">Save</button>
+        <button type="submit" class="btn btn-outline-primary px-3">Save</button>
     </div>   
 </form>
 
