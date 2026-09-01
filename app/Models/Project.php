@@ -13,4 +13,9 @@ class Project extends Model
         'client',
         'description'
     ];
+
+    // define method for allowing dependency 
+    public function type () {
+        return $this->belongsTo(Type::class);
+    }
 }
