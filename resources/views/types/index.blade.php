@@ -22,9 +22,10 @@
                     <td>{{ $loop->iteration }} </td>
                     <td>{{ $type->name }}</td>
                     <td>{{ $type->description }}</td>
-                    <td> 
-                        <a href="#" class="btn btn-outline-warning"><i class="bi bi-pencil-fill"></i></a>
-                        <a href="#" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                    <td>
+                        <a href="{{ route('types.show', $type) }}" class="action-btn btn btn-outline-info"><i class="bi bi-arrow-right"></i></a> 
+                        <a href="#" class="action-btn btn btn-outline-warning"><i class="bi bi-pencil-fill"></i></a>
+                        <a href="{{ route('types.show', $type)}}" class="action-btn btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
                     </td>
                 </tr>
             @endforeach
