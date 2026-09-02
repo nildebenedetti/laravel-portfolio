@@ -14,7 +14,7 @@ class TechnologiesTableSeeder extends Seeder
     public function run(): void
     {
         $technologies = [
-            'javascript' => ['name' => 'Javascript', 'color' => '#E9D44D'],
+            'javascript' => ['name' => 'JavaScript', 'color' => '#E9D44D'],
             'php'        => ['name' => 'PHP',        'color' => '#7377AE'],
             'laravel'    => ['name' =>  'Laravel',   'color' => '#F61500'],   
             'react'      => ['name' => 'React',      'color' => '#5ED3F3'],
