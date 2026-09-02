@@ -27,7 +27,7 @@
         <!-- technologies -->
         <div class="col-sm-12 mb-3 d-flex flex-wrap gap-2 px-4 mt-4">
             @foreach($technologies as $technology)
-                <input type="checkbox" name="tags[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}">
+                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}">
                 <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
             @endforeach
 

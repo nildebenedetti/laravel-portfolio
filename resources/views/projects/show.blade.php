@@ -38,10 +38,14 @@
                         <span class="text-secondary">
                             Client: {{ $project->client }}
                         </span>
+                    </div>
+                    <div class="d-flex gap-2 mb-2">
                         <!-- tech stack -->
-                        <span class="badge bg-violet rounded-pill tech-secondary-font px-3 py-2 mt-2">
-                            {{ $project->tech_stack }}
-                        </span>
+                        @if(count($project->technologies) > 0)
+                        @foreach($project->technologies as $technology)
+                            <span class="badge rounded-pill tech-secondary-font" style="background-color:{{ $technology->color }}">{{ $technology->name }}</span>
+                        @endforeach
+                        @endif
                     </div>
                     
                 </div>

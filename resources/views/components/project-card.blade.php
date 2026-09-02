@@ -12,14 +12,17 @@
             Powered By: {{ $project->client }}
         </h6>
 
-        {{-- Tech Stack Badge --}}
-        <div class="mb-3">
-            <span class="tech-secondary-font bg-violet rounded-pill text-light px-3 py-2 fw-medium">
-            {{ $project->tech_stack }}
-            </span>
+        {{-- Tech Stack Badges --}}
+        <div class="d-flex gap-2 mb-2">
+            <!-- tech stack -->
+            @if(count($project->technologies) > 0)
+            @foreach($project->technologies as $technology)
+                <span class="badge rounded-pill tech-secondary-font" style="background-color:{{ $technology->color }}">{{ $technology->name }}</span>
+            @endforeach
+            @endif
         </div>
 
-        {{-- Descrizione --}}
+        {{-- Description --}}
         <p class="card-text description-clamp flex-grow-1 text-secondary">
             {{ $project->description }}
         </p>
