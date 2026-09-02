@@ -40,16 +40,16 @@ class TechnologyController extends Controller
 
         $newTechnology->save();
 
-        return redirect()->route('technologies.index');
+        return redirect()->route('technologies.show', $newTechnology);
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Technology $technology)
     {
-        //
+        return view("technologies.show", compact('technology'));
     }
 
     /**
