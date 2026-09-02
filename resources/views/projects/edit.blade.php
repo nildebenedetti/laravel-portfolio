@@ -24,11 +24,14 @@
                 @endforeach
             </select>
         </div>
-        <!-- tech stack -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
-            <label for="tech_stack" class="py-2">Tech Stack</label>
-            <input type="text" id="tech_stack" name="tech_stack" value="{{ $project->tech_stack }}">
+        <!-- technologies -->
+        <div class="col-sm-12 mb-3 d-flex flex-wrap gap-2 px-4 mt-4">
+            @foreach($technologies as $technology)
+                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}"  {{ $project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
+            @endforeach
         </div>
+
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="github_link" class="py-2">Github Link</label>
