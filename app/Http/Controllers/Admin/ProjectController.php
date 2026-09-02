@@ -91,8 +91,19 @@ class ProjectController extends Controller
         // we do not need to save as ->save() creates
         // a new row in db, which is NOT needed
 
-        // We need to sync the p[ivot table
-        $project->technologies()->sync($data['technologies'] ?? []); // if not present, empty array
+        // We need to sync the pivot table
+        // ALTERNATIVE 1
+        $project->technologies()->sync($data['technologies'] ?? []);
+        // if not present, empty array
+
+        // ALTERNATIVE 2
+        // this explicit version also work - shown detach() method
+
+        // if (isset($data['technologies'])) {
+        //     $project->technologies()->sync($data['technologies']);
+        // } else {
+        //     $project->technologies()->detach();
+        // }
 
         // after that we proceed redirecting
         return redirect()->route('projects.show', $project);
