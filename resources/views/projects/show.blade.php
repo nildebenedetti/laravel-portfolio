@@ -92,7 +92,11 @@
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3">
                         <small class="text-muted d-block">Tech Stack</small>
-                        <span class="fw-semibold text-primary">{{ $project->tech_stack }}</span>
+                        <span class="fw-semibold text-dark">
+                            @foreach ($project->technologies as $technology)
+                                {{ $technology->name . " "}}
+                            @endforeach
+                        </span>
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3 border-bottom-0">
                         <small class="text-muted d-block mb-1">Direct Link</small>

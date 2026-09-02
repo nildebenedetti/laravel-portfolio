@@ -7,7 +7,7 @@
     @csrf {{-- security token for Cross-Site Request Forgery --}}
     <div class="row d-flex justify-content-center">
         <!-- title -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
+        <div class="col col-sm-12 d-flex flex-column">
             <label for="title" class="py-2">Title</label>
             <input type="text" id="title" name="title">
         </div>
@@ -47,13 +47,6 @@
             <label for="description" class="py-2">Description</label>
             <textarea id="description" name="description" rows="10" ></textarea>
         </div>
-
-                <!-- tech stack -->
-        <div class="col col-sm-12 d-flex flex-column">
-            <label for="tech_stack" class="py-2">Tech Stack</label>
-            <input type="text" id="tech_stack" name="tech_stack">
-        </div>
-
     </div>
     <div class="btn-wrapper d-flex justify-content-end pt-4">
         <button type="submit" action class="btn btn-outline-primary px-3">Save</button>

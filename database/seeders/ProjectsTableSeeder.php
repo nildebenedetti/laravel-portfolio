@@ -30,7 +30,6 @@ class ProjectsTableSeeder extends Seeder
 
         $newProject->title = $faker->words(3, true);
         $newProject->type_id = rand(1, 5);
-        $newProject->tech_stack = $faker->words(5, true);
         $newProject->github_link = $faker->url();
         $newProject->client = $faker->company();
         $newProject->description = $faker->paragraphs(4, true);

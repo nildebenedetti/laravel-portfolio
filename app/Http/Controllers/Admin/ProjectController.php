@@ -42,7 +42,6 @@ class ProjectController extends Controller
         $newProject = new Project; // instantiate new row in db for Project Table
         $newProject->title = $data['title']; //assign saved data to field
         $newProject->type_id = $data['type_id'];
-        $newProject->tech_stack = $data['tech_stack'];
         $newProject->github_link = $data['github_link'];
         $newProject->client = $data['client'];
         $newProject->description = $data['description'];
