@@ -28,6 +28,7 @@ class ProjectController extends Controller
         $types = Type::all();
         $technologies = Technology::all();
 
+
         return view("projects.create", compact('types', 'technologies'));
     }
 
@@ -47,6 +48,10 @@ class ProjectController extends Controller
         $newProject->description = $data['description'];
 
         $newProject->save(); // save in the db
+
+        if (isset($request['technologies'])) {
+            $project->technologies()->attach($data['technologies']);
+        }
 
         // Notice: after saving the post
         $newProject->technologies()->attach($data['technologies']); 
@@ -113,7 +118,11 @@ class ProjectController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Project $project)
-    {
+    {   
+        // remove associations before deleting resource 
+        // in order to prevent crashhh
+        $project->technologies()->detach();
+
         $project->delete();
 
         return redirect()->route('projects.index');
