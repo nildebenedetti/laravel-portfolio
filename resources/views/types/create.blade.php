@@ -1,6 +1,6 @@
 @extends("layouts.types")
 
-@section("title", "add a new category")
+@section("title", "Add a New Type")
 
 @section("content")
 <form action="{{ route('types.store')}}" method="POST" class="pt-4">
