@@ -85,13 +85,16 @@ class ProjectController extends Controller
         $data = $request->all(); //extract data from request
 
         //then update all fields with update method
+
         $project->update($data);
-        
-        // dd($data);
+
         // we do not need to save as ->save() creates
         // a new row in db, which is NOT needed
 
-        // so we proceed redirecting
+        // We need to sync the p[ivot table
+        $project->technologies()->sync($data['technologies'] ?? []); // if not present, empty array
+
+        // after that we proceed redirecting
         return redirect()->route('projects.show', $project);
     }
 
