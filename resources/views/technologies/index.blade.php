@@ -6,7 +6,7 @@
 <div class="container py-5">
     <!-- New Elem BTN -->
     <div class="d-flex justify-content-end py-4 gap-2">
-        <a class="btn btn-outline-primary" href="{{ route('types.create') }}">Add New + </a>
+        <a class="btn btn-outline-primary" href="{{ route('technologies.create') }}">Add New + </a>
     </div>
     <!--  Technologies Table -->
     <table class="table">
@@ -14,7 +14,7 @@
             <th scope="col">#</th>
             <th scope="col">Name</th>
             <th scope="col">Color Code</th>
-            <th scope="col">Actions</th>    
+            <th scope="col">Actions</th>
         </thead>
         <tbody>
             @foreach ($technologies as $technology) 
