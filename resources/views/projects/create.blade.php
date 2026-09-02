@@ -12,7 +12,7 @@
             <input type="text" id="title" name="title">
         </div>
         <!-- type selection -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
+        <div class="col col-sm-12 d-flex flex-column">
             <label for="type_id" class="py-2">Category</label>
             <select name="type_id" id="type_id" class="py-1">
                 <option value="">select a suitable category</option>
@@ -22,11 +22,15 @@
                 </option>
                 @endforeach
             </select>
-</div>
-        <!-- tech stack -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
-            <label for="tech_stack" class="py-2">Tech Stack</label>
-            <input type="text" id="tech_stack" name="tech_stack">
+        </div>
+
+        <!-- technologies -->
+        <div class="col-sm-12 mb-3 d-flex flex-wrap gap-2 px-4 mt-4">
+            @foreach($technologies as $technology)
+                <input type="checkbox" name="tags[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}">
+                <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
+            @endforeach
+
         </div>
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
@@ -43,6 +47,13 @@
             <label for="description" class="py-2">Description</label>
             <textarea id="description" name="description" rows="10" ></textarea>
         </div>
+
+                <!-- tech stack -->
+        <div class="col col-sm-12 d-flex flex-column">
+            <label for="tech_stack" class="py-2">Tech Stack</label>
+            <input type="text" id="tech_stack" name="tech_stack">
+        </div>
+
     </div>
     <div class="btn-wrapper d-flex justify-content-end pt-4">
         <button type="submit" action class="btn btn-outline-primary px-3">Save</button>

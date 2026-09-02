@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -25,14 +26,16 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view("projects.create", compact('types'));
+        $technologies = Technology::all();
+
+        return view("projects.create", compact('types', 'technologies'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
+    {   
         $data = $request->all(); // save request data in associative array
         
         $newProject = new Project; // instantiate new row in db for Project Table
@@ -44,6 +47,13 @@ class ProjectController extends Controller
         $newProject->description = $data['description'];
 
         $newProject->save(); // save in the db
+
+        // Notice: after saving the post
+        $newProject->technologies()->attach($data['technologies']); 
+        // we are appending the array we created in checkbox inputs
+        // CONTAINING TECHNOLOGIES IDS 
+        // which needs to be associated in the pivot table
+        // to the id of the new project instantiated
 
         return redirect()->route("projects.show", $newProject); //return redirect to show post page
 

@@ -15,8 +15,15 @@ class Project extends Model
         'description'
     ];
 
-    // define method for allowing dependency 
+    // define methods for allowing dependencies
+    
     public function type () {
+
         return $this->belongsTo(Type::class);
+    }
+
+    public function technology() {
+
+        return $this->belongsToMany(Technology::class);
     }
 }
