@@ -12,7 +12,7 @@
             <h2 class="mb-4">Tech Stack Label Details:</h2>
             <!-- edit & delete buttons -->
             <div class="d-flex py-4 gap-2">
-                <a class="btn btn-outline-warning" href="#">Edit</a>
+                <a class="btn btn-outline-warning" href="{{ route('technologies.edit', $technology) }}">Edit</a>
                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
                     Delete
                 </button>
