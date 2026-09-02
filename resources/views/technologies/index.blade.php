@@ -58,7 +58,7 @@
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
 
                                 {{-- Form for effective deletion --}}
-                                <form action="" method="POST">
+                                <form action="{{ route('technologies.destroy', $technology) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger">Delete permanently</button>
