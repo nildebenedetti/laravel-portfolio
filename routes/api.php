@@ -15,4 +15,13 @@ Route::get('/user', function (Request $request) {
 
 // address: http://127.0.0.1/8000/api/projects 
 
-Route::get('projects', [ProjectController::class, 'index']);
+Route::get('projects', [ProjectController::class, 'index']); 
+
+Route::get('projects/{project}', [ProjectController::class, 'show']);
+
+// n.B.: ProjectController::class -> this syntax is called Class Name Resolution
+// it is NEITHER a class invoking NOR an access to static properties
+// instead, this resolves when compiled returning a STRING containing
+// the FQCN (FULLY QUALIFIED CLASS NAME), WHICH IS THE 
+// NAMESPACE CLASS COMPLETE NAME: 
+// Route::get('posts', ['App\Http\Controllers\Api\PostController', 'index']);

@@ -13,7 +13,8 @@ class ProjectController extends Controller
     public function index() {
 
         // Extract necessary info to be provided by API
-        $projects = Project::all();
+        $projects = Project::with('type')->get(); //with() executes the eager loading for 
+        // many-to-one relationship btw Projects and Type
 
         // return a JSON file <3 
         // finally back!!!
@@ -27,10 +28,14 @@ class ProjectController extends Controller
     // 2. SHOW - Shall return a JSON containing ONE project 
     // corresponding to received id
     // complete with all related resources
-//     public function show(Project $project) {
-//         // extract desired data
+    public function show(Project $project) {
+        // extract desired data
+        $project->load('type', 'technologies');
+        // return JSON file
+        return response()->json([
+            "success" => true,
+            "data" => $project
+        ]);
+    }
 
-//         // return JSON file
-//     }
-
-// }
+    }
