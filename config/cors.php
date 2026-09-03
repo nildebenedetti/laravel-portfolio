@@ -21,7 +21,7 @@ return [
 
     'allowed_origins' => [
 
-        [env('APP_FRONTEND_URL', 'http://localhost:5173')] // SHALL FIRST NOT BE AVAILABLE, THE SECOND WILL BE TAKEN BY DEFAULT
+        env('APP_FRONTEND_URL', ['http://localhost:5173']) // SHALL FIRST NOT BE AVAILABLE, THE SECOND WILL BE TAKEN BY DEFAULT
     ],
 
     'allowed_origins_patterns' => [],
