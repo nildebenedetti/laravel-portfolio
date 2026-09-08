@@ -37,7 +37,6 @@
         <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">
             <label for="image">Add an image for your project.</label>
             <input type="file" name="image" id="image">
-
         </div>
         <!-- alt text image input -->
         <div class="col col-sm-12 d-flex flex-column mb-3">

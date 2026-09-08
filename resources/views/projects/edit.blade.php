@@ -32,6 +32,24 @@
             @endforeach
         </div>
 
+        <!-- image input -->
+        <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">
+            <label for="image">Add an image for your project.</label>
+            <input type="file" name="image" id="image" value="{{ $project->image ? $project->image : '' }}">
+        </div>
+        <!-- image preview-->
+        @if($project->image)
+        <div class="container p-3">
+            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->alt_text }}" class="project-image img-fluid w-25">
+        </div>
+        @endif
+
+        <!-- alt text image input -->
+        <div class="col col-sm-12 d-flex flex-column mb-3">
+            <label class="pb-3" for="alt_text">Add a description for your image.</label>
+            <input type="text" name="alt_text" id="alt_text"  value="{{ $project->alt_text ? $project->alt_text : '' }}">
+        </div> 
+
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="github_link" class="py-2">Github Link</label>
