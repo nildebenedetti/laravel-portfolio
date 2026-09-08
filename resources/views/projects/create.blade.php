@@ -32,11 +32,25 @@
             @endforeach
 
         </div>
+
+        <!-- image input -->
+        <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">
+            <label for="image">Add an image for your project.</label>
+            <input type="file" name="image" id="image">
+
+        </div>
+        <!-- alt text image input -->
+        <div class="col col-sm-12 d-flex flex-column mb-3">
+            <label class="pb-3" for="alt_text">Add a description for your image.</label>
+            <input type="text" name="alt_text" id="alt_text">
+        </div>           
+
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="github_link" class="py-2">Github Link</label>
             <input type="text" id="github_link" name="github_link">
         </div>
+
         <!-- client -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="client" class="py-2">Client</label>
@@ -51,7 +65,6 @@
     <div class="btn-wrapper d-flex justify-content-end pt-4">
         <button type="submit" action class="btn btn-outline-primary px-3">Save</button>
     </div>        
-    
         
 </form>
 @endsection
