@@ -98,11 +98,31 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
+
         $data = $request->all(); //extract data from request
 
-        //then update all fields with update method
+        // manipulate array in case an image is present
+
+        if ($request->hasFile('image')) {
+
+            if($project->image) {
+                // this is just in case we already have an image inb the db
+                Storage::delete($project->image);
+
+            }
+
+            // in any case we need to upload the new one
+            // so we are, in just 1 row:
+            // 1. writing a new file on disk
+            // 2. overriding thew field data['image'] with the string created by Storage::putFile method
+            $data['image'] = Storage::putFile('projects', $data['image']);
+            
+        }
+
+        // then update all fields with update method
 
         $project->update($data);
+
 
         // we do not need to save as ->save() creates
         // a new row in db, which is NOT needed
@@ -133,6 +153,9 @@ class ProjectController extends Controller
         // remove associations before deleting resource 
         // in order to prevent crashhh
         $project->technologies()->detach();
+
+        // remove image from storage if present
+        Storage::delete($project->image);
 
         $project->delete();
 
