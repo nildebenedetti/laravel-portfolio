@@ -46,10 +46,20 @@ class ProjectController extends Controller
         $newProject->client = $data['client'];
         $newProject->description = $data['description'];
 
+
+        // if any image exists, save it
+        if(array_key_exists('image', $data)) {
+            $newProject->image = $data['image'];
+        }
+
+        if(array_key_exists('alt_text', $data)) {
+            $newProject->alt_text = $data['alt_text'];
+        }
+
         $newProject->save(); // save in the db
 
         if (isset($request['technologies'])) {
-            $project->technologies()->attach($data['technologies']);
+            $newProject->technologies()->attach($data['technologies']);
         }
 
         // Notice: after saving the post
