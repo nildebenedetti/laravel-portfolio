@@ -7,6 +7,7 @@ use App\Models\Type;
 use App\Models\Technology;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -49,7 +50,8 @@ class ProjectController extends Controller
 
         // if any image exists, save it
         if(array_key_exists('image', $data)) {
-            $newProject->image = $data['image'];
+            $img_path = Storage::putFile('projects', $data['image']);
+            $newProject->image = $img_path;
         }
 
         if(array_key_exists('alt_text', $data)) {

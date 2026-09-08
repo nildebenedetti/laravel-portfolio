@@ -3,7 +3,7 @@
 @section("title", "Add New Project")
 
 @section("content")
-<form action="{{ route('projects.store') }}" method="POST" class="py-4">
+<form action="{{ route('projects.store') }}" method="POST" class="py-4" enctype="multipart/form-data">
     @csrf {{-- security token for Cross-Site Request Forgery --}}
     <div class="row d-flex justify-content-center">
         <!-- title -->

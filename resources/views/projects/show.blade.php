@@ -50,6 +50,13 @@
                     
                 </div>
 
+                <!-- image -->
+                @if($project->image)
+                <div class="container p-3">
+                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->alt_text }}" class="project-image img-fluid">
+                </div>
+                @endif
+
                 <!-- GitHub Repository Box -->
                 <div class="bg-light p-4 rounded-3 border mb-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
                     <div>
