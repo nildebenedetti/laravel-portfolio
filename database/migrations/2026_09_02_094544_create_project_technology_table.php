@@ -17,8 +17,8 @@ return new class extends Migration
             // constrained() automatically infers the referenced 
             // table ('technologies') by pluralizing the 'technology'
             // prefix and targeting its 'id' column.
-            $table->foreignId('project_id')->constrained();
-            $table->foreignId('technology_id')->constrained();
+            $table->foreignId('project_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('technology_id')->constrained()->cascadeOnDelete();
 
             $table->timestamps();
         });

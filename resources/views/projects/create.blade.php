@@ -9,13 +9,13 @@
         <!-- title -->
         <div class="col col-sm-12 d-flex flex-column">
             <label for="title" class="py-2">Title</label>
-            <input type="text" id="title" name="title">
+            <input required type="text" id="title" name="title">
         </div>
         <!-- type selection -->
         <div class="col col-sm-12 d-flex flex-column">
             <label for="type_id" class="py-2">Category</label>
-            <select name="type_id" id="type_id" class="py-1">
-                <option value="">select a suitable category</option>
+            <select name="type_id" id="type_id" class="py-1" required>
+                <option disabled value="">select a suitable category</option>
                 @foreach ($types as $type) 
                 <option value="{{ $type->id }}">
                     {{ $type->name }}
@@ -47,7 +47,7 @@
         <!-- github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">
             <label for="github_link" class="py-2">Github Link</label>
-            <input type="text" id="github_link" name="github_link">
+            <input required type="text" id="github_link" name="github_link">
         </div>
 
         <!-- client -->
@@ -58,7 +58,7 @@
         <!-- description -->
         <div class="col col-sm-12 col-md-12 col-lg-12 d-flex flex-column">
             <label for="description" class="py-2">Description</label>
-            <textarea id="description" name="description" rows="10" ></textarea>
+            <textarea required id="description" name="description" rows="10" ></textarea>
         </div>
     </div>
     <div class="btn-wrapper d-flex justify-content-end pt-4">
