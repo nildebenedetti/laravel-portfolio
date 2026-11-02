@@ -11,6 +11,7 @@
         <h6 class="card-subtitle text-muted fw-lighter mb-3">
             Powered By: {{ $project->client }}
         </h6>
+        <small class="text-muted pb-2" >{{ $project->date }}</small>
 
         {{-- Tech Stack Badges --}}
         <div class="d-flex gap-2 mb-2">

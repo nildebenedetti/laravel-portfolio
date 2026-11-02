@@ -25,29 +25,33 @@
             <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4">
                 
                 <!-- Project Header -->
-                <div class="border-bottom pb-4 mb-4">
-                    
-                    <!-- Project Title --> 
-                    <h1 class="display-5 fw-bold text-dark text-capitalize mt-3">
-                        {{ $project->title }}
-                    </h1>
-                    <h5 class="text-secondary"> 
-                        {{ $project->type->name }}
-                    </h5>
-                    <div class="d-flex flex-column align-items-start justify-content-start gap-2 mb-2">
-                        <span class="text-secondary">
-                            Client: {{ $project->client }}
-                        </span>
+                <div class="border-bottom pb-4 mb-4 d-flex">                    
+                    <!-- LEFT SIDE -->
+                    <div class="d-flex flex-column h-100 flex-grow-1">
+                        <!-- Project Title --> 
+                        <h1 class="display-5 fw-bold text-dark text-capitalize mt-3">
+                            {{ $project->title }}
+                        </h1>
+                        <h5 class="text-secondary"> 
+                            {{ $project->type->name }}
+                        </h5>
+                        <div class="d-flex flex-column align-items-start justify-content-start gap-2 mb-2">
+                            <span class="text-secondary">
+                                Client: {{ $project->client }}
+                            </span>
+                        </div>
+                        <div class="d-flex gap-2 mb-2">
+                            <!-- tech stack -->
+                            @if(count($project->technologies) > 0)
+                            @foreach($project->technologies as $technology)
+                                <span class="badge rounded-pill tech-secondary-font" style="background-color:{{ $technology->color }}">{{ $technology->name }}</span>
+                            @endforeach
+                            @endif
+                        </div>
                     </div>
-                    <div class="d-flex gap-2 mb-2">
-                        <!-- tech stack -->
-                        @if(count($project->technologies) > 0)
-                        @foreach($project->technologies as $technology)
-                            <span class="badge rounded-pill tech-secondary-font" style="background-color:{{ $technology->color }}">{{ $technology->name }}</span>
-                        @endforeach
-                        @endif
+                    <div class="d-flex flex-column justify-content-end align-items-">
+                        <small class="text-muted">{{$project->date}}</small>
                     </div>
-                    
                 </div>
 
                 <!-- image -->
@@ -101,7 +105,7 @@
                         <small class="text-muted d-block">Tech Stack</small>
                         <span class="fw-semibold text-dark">
                             @foreach ($project->technologies as $technology)
-                                {{ $technology->name . " "}}
+                                {{ $technology->name }}{{ $loop->last? "" : " · "}}
                             @endforeach
                         </span>
                     </li>
