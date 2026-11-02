@@ -155,7 +155,11 @@ class ProjectController extends Controller
         $project->technologies()->detach();
 
         // remove image from storage if present
-        Storage::delete($project->image);
+        if ($project->image) {
+        
+            Storage::delete($project->image);
+
+        }
 
         $project->delete();
 
