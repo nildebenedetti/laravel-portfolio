@@ -31,6 +31,19 @@
                 <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
             @endforeach
         </div>
+        <!-- Date -->
+        <div class="col col-sm-12 d-flex flex-column">
+            <label for="date" class="pt-2">Date</label>
+            <input required type="date" id="date" name="date" value="{{ old('date') }}" class="form-control @error('date') is-invalid @enderror">
+            @error('date')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+        </div>
+        <!-- Youtube Video ID -->
+        <div class="col col-sm-12 d-flex flex-column mb-3 mt-2">
+            <label class="pb-3" for="video_ID">Add your Youtube video ID.</label>
+            <input type="text" name="video_ID" id="video_ID">
+        </div>  
 
         <!-- image input -->
         <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">

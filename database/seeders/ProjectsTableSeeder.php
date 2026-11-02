@@ -33,6 +33,8 @@ class ProjectsTableSeeder extends Seeder
         $newProject->github_link = $faker->url();
         $newProject->client = $faker->company();
         $newProject->description = $faker->paragraphs(4, true);
+        $newProject->date = $faker->dateTimeBetween('2026-03-01', '2026-11-01')->format('Y-m-d');
+        $newProject->video_ID = $faker->regexify('[A-Za-z0-9]{11}');
 
         $newProject->save();
 

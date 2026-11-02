@@ -46,6 +46,8 @@ class ProjectController extends Controller
         $newProject->github_link = $data['github_link'];
         $newProject->client = $data['client'];
         $newProject->description = $data['description'];
+        $newProject->video_ID = $data['video_ID'];
+        $newProject->date = $data['date'];
 
 
         // if any image exists, save it
