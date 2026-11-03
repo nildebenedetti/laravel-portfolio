@@ -3,7 +3,7 @@
 @section("title", "Edit Project")
 
 @section("content")
-<form action="{{ route('projects.update', $project) }}" method="POST" class="py-4">
+<form action="{{ route('projects.update', $project) }}" method="POST" enctype="multipart/form-data" class="py-4">
     @csrf {{-- security token for Cross-Site Request Forgery --}}
     @method('PUT') {{-- SPECIFY PUT METHOD --}}
     <div class="row d-flex justify-content-center">
@@ -27,14 +27,14 @@
         <!-- technologies -->
         <div class="col-sm-12 mb-3 d-flex flex-wrap gap-2 px-4 mt-4">
             @foreach($technologies as $technology)
-                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}"  {{ $project->technologies->contains($technology->id) ? 'checked' : ''}}>
+                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="tech-{{ $technology->id }}"  {{ $project->technologies->contains($technology->id) ? 'checked' : ''}}>
                 <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
             @endforeach
         </div>
         <!-- Date -->
         <div class="col col-sm-12 d-flex flex-column">
             <label for="date" class="pt-2">Date</label>
-            <input required type="date" id="date" name="date" value="{{ old('date') }}" class="form-control @error('date') is-invalid @enderror">
+            <input required type="date" id="date" name="date" value="{{ old('date', $project->date) }}" class="form-control @error('date') is-invalid @enderror">
             @error('date')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
