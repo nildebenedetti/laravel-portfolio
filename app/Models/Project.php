@@ -12,7 +12,12 @@ class Project extends Model
         'github_link',
         'tech_stack',
         'client',
-        'description'
+        'description',
+        'image',
+        'alt_text',
+        'video_ID',
+        'date',
+
     ];
 
     // define methods for allowing dependencies
