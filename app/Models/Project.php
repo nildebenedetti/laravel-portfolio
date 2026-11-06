@@ -6,6 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+
+    public const STACK_FULL = 'full_stack';
+    public const STACK_FRONT = 'front_end';
+    public const STACK_BACK = 'back_end';
+
+    public static function getStackTypes(): array
+    {
+        return [
+            self::STACK_FULL => 'Full Stack',
+            self::STACK_FRONT => 'Frontend',
+            self::STACK_BACK => 'Backend',
+        ];
+    }
+
     protected $fillable = [
         'title',
         'type_id',
