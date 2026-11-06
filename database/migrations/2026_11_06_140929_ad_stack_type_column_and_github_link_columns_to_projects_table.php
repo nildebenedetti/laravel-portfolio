@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->string('stack_type');
-            $table->string('frontend_github_link')->nullable();
-            $table->string('backend_github_link')->nullable();
+            $table->string('frontend_github_link')->nullable()->after('github_link');
+            $table->string('backend_github_link')->nullable()->after('frontend_github_link');
         });
     }
 

@@ -30,7 +30,28 @@ class ProjectsTableSeeder extends Seeder
 
         $newProject->title = $faker->words(3, true);
         $newProject->type_id = rand(1, 5);
-        $newProject->github_link = $faker->url();
+        $newProject->stack_type = $faker->randomElement($stackTypes);
+        
+        if ($stackType === Project::STACK_FRONT) {
+                // Se è solo frontend, valorizziamo solo il link frontend
+                $newProject->front_end_github_link = $faker->url();
+                $newProject->back_end_github_link = null;
+                $newProject->github_link = null;
+            } 
+            elseif ($stackType === Project::STACK_BACK) {
+                // Se è solo backend, valorizziamo solo il link backend
+                $newProject->back_end_github_link = $faker->url();
+                $newProject->front_end_github_link = null;
+                $newProject->github_link = null;
+            } 
+            else {
+                // Altrimenti (Full Stack), valorizziamo il link principale (o entrambi)
+                $newProject->github_link = $faker->url();
+                // Se vuoi puoi mettere anche entrambi, a seconda di come hai strutturato il form
+                $newProject->front_end_github_link = null;
+                $newProject->back_end_github_link = null;
+            }
+        
         $newProject->client = $faker->company();
         $newProject->description = $faker->paragraphs(4, true);
         $newProject->date = $faker->dateTimeBetween('2026-03-01', '2026-11-01')->format('Y-m-d');
