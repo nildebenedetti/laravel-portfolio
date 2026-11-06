@@ -42,7 +42,7 @@
         </div>
         <!-- Youtube Video ID -->
         <div class="col col-sm-12 d-flex flex-column mb-3 mt-2">
-            <label class="pb-3" for="video_ID">Add your Youtube video ID.</label>
+            <label class="pb-3" for="video_ID">Youtube video ID</label>
             <input type="text" name="video_ID" id="video_ID">
         </div>    
         <!-- image input -->
@@ -54,12 +54,36 @@
         <div class="col col-sm-12 d-flex flex-column mb-3">
             <label class="pb-3" for="alt_text">Add a description for your image.</label>
             <input type="text" name="alt_text" id="alt_text">
-        </div>           
+        </div> 
+        
+        <!-- stack_type selection -->
+        <div class="col col-sm-12 d-flex flex-column">
+            <label for="stack_type" class="py-2">Stack Type</label>
+            <select name="stack_type" id="stack_type" class="py-1" required>
+                @foreach(App\Models\Project::getStackTypes() as $key => $label )
+                <option value="{{ $key }}" {{ old('stack_type', $project->stack_type ?? '') === $key ? 'selected' : '' }}>
+                    {{ $label }}
+                </option>
+                @endforeach
+            </select>
+        </div>
 
         <!-- github link -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_github_link">
             <label for="github_link" class="py-2">Github Link</label>
-            <input required type="text" id="github_link" name="github_link">
+            <input type="text" id="github_link" name="github_link">
+        </div>
+
+        <!-- frontend github link -->
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_front_end_github_link">
+            <label for="front_end_github_link" class="py-2">Frontend Github Link</label>
+            <input type="text" id="front_end_github_link" name="front_end_github_link">
+        </div>
+
+        <!-- backend github link -->
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_back_end_github_link">
+            <label for="back_end_github_link" class="py-2">Backend Github Link</label>
+            <input type="text" id="back_end_github_link" name="back_end_github_link">
         </div>
 
         <!-- client -->
