@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Project;
 use App\Models\Technology;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 use Faker\Generator as Faker;
@@ -23,34 +22,30 @@ class ProjectsTableSeeder extends Seeder
 
         //SUPER FUN: get all ids from Technology model
         $technologiesIds = Technology::pluck('id')->toArray();
+        $stackTypes = array_keys(Project::getStackTypes());
 
         for ($i = 0; $i <10; $i++) {
+
+        $stackType = $faker->randomElement($stackTypes);
             
         $newProject = new Project();
 
         $newProject->title = $faker->words(3, true);
         $newProject->type_id = rand(1, 5);
-        $newProject->stack_type = $faker->randomElement($stackTypes);
+        $newProject->stack_type = $stackType;
         
         if ($stackType === Project::STACK_FRONT) {
-                // Se è solo frontend, valorizziamo solo il link frontend
-                $newProject->front_end_github_link = $faker->url();
-                $newProject->back_end_github_link = null;
+                
+                $newProject->frontend_github_link = $faker->url();
+                $newProject->backend_github_link = null;
                 $newProject->github_link = null;
             } 
             elseif ($stackType === Project::STACK_BACK) {
-                // Se è solo backend, valorizziamo solo il link backend
-                $newProject->back_end_github_link = $faker->url();
-                $newProject->front_end_github_link = null;
+                
+                $newProject->backend_github_link = $faker->url();
+                $newProject->frontend_github_link = null;
                 $newProject->github_link = null;
             } 
-            else {
-                // Altrimenti (Full Stack), valorizziamo il link principale (o entrambi)
-                $newProject->github_link = $faker->url();
-                // Se vuoi puoi mettere anche entrambi, a seconda di come hai strutturato il form
-                $newProject->front_end_github_link = null;
-                $newProject->back_end_github_link = null;
-            }
         
         $newProject->client = $faker->company();
         $newProject->description = $faker->paragraphs(4, true);
