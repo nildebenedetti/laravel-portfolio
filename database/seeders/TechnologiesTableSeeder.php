@@ -22,6 +22,7 @@ class TechnologiesTableSeeder extends Seeder
             'sql'        => ['name' => 'SQL',        'color' => '#F29111'],
             'html'       => ['name' => 'HTML',       'color' => '#DC4A25'],
             'css'        => ['name' => 'CSS',        'color' => '#094AE5'],
+            'anthropic'  => ['name' => 'Anthropic',  'color' => '#CC6B39'],
         ];
 
         foreach ($technologies as $technology) {
