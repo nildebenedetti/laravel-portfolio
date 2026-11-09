@@ -40,16 +40,19 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
+
         <!-- Youtube Video ID -->
         <div class="col col-sm-12 d-flex flex-column mb-3 mt-2">
             <label class="pb-3" for="video_ID">Youtube video ID</label>
             <input type="text" name="video_ID" id="video_ID">
         </div>    
+
         <!-- image input -->
         <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">
             <label for="image">Add an image for your project.</label>
             <input type="file" name="image" id="image">
         </div>
+
         <!-- alt text image input -->
         <div class="col col-sm-12 d-flex flex-column mb-3">
             <label class="pb-3" for="alt_text">Add a description for your image.</label>
@@ -61,6 +64,7 @@
             <label for="client" class="py-2">Client (if any)</label>
             <input type="text" id="client" name="client">
         </div>
+        
         <!-- live link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column" id="group_live_link">
             <label for="live_link" class="py-2">Website Link (if any)</label>
