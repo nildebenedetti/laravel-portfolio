@@ -70,10 +70,32 @@ class ProjectController extends Controller
                 $newProject->live_link = $data['live_link'];
         }
 
-        // if any image exists, save it
+        // if main image exists, save it
         if(array_key_exists('image', $data)) {
             $img_path = Storage::putFile('projects', $data['image']);
             $newProject->image = $img_path;
+        }
+
+        // same for secondary images
+        if (array_key_exists('image_pt_1', $data)) {
+            $img_path_pt_first = Storage::putfile('projects', $data['image_pt_1']);
+            $newProject->image_pt_1= $img_path_pt_first;
+        }
+
+        
+        if (array_key_exists('image_pt_2', $data)) {
+            $img_path_pt_second = Storage::putfile('projects', $data['image_pt_2']);
+            $newProject->image_pt_2= $img_path_pt_second;
+        }
+
+        if (array_key_exists('image_pt_3', $data)) {
+            $img_path_pt_third = Storage::putfile('projects', $data['image_pt_3']);
+            $newProject->image_pt_3= $img_path_pt_third;
+        }
+
+        if (array_key_exists('image_pt_4', $data)) {
+            $img_path_pt_fourth = Storage::putfile('projects', $data['image_pt_4']);
+            $newProject->image_pt_4= $img_path_pt_fourth;
         }
 
         if(array_key_exists('alt_text', $data)) {
@@ -116,6 +138,13 @@ class ProjectController extends Controller
 
         $data = $request->all(); //extract data from request
 
+        // never overwrite existing images with empty file inputs
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if (! $request->hasFile($imageField)) {
+                unset($data[$imageField]);
+            }
+        }
+
         // manipulate array in case an image is present
 
         if ($request->hasFile('image')) {
@@ -132,6 +161,18 @@ class ProjectController extends Controller
             // 2. overriding thew field data['image'] with the string created by Storage::putFile method
             $data['image'] = Storage::putFile('projects', $data['image']);
             
+        }
+
+        // handle secondary images: replace the file and remove the old one
+        foreach (['image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if ($request->hasFile($imageField)) {
+
+                if ($project->{$imageField}) {
+                    Storage::delete($project->{$imageField});
+                }
+
+                $data[$imageField] = Storage::putFile('projects', $request->file($imageField));
+            }
         }
 
         // remove the links that do not belong to the selected stack type,
@@ -170,11 +211,11 @@ class ProjectController extends Controller
         // in order to prevent crashhh
         $project->technologies()->detach();
 
-        // remove image from storage if present
-        if ($project->image) {
-        
-            Storage::delete($project->image);
-
+        // remove main and secondary images from storage if present
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if ($project->{$imageField}) {
+                Storage::delete($project->{$imageField});
+            }
         }
 
         $project->delete();
