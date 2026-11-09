@@ -17,6 +17,77 @@ body {
     font-size: 0.75rem;
 }
 
+/*====== HEADER / NAVBAR =====*/
+.glass-bar {
+    background: rgba(255, 255, 255, 0.78);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    z-index: 1030;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+
+.navbar-logo {
+    display: block;
+    width: auto;
+    height: 44px;
+}
+
+.glass-bar .nav-link {
+    color: #111;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+}
+
+.glass-bar .nav-link:hover,
+.glass-bar .nav-link:focus,
+.glass-bar .nav-link.active {
+    color: #111;
+}
+
+.glass-bar .nav-link.active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.4rem;
+}
+
+.glass-bar .navbar-toggler {
+    padding: 0.4rem 0.6rem;
+    border: 1px solid #111;
+    border-radius: 0;
+}
+
+.glass-bar .navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.glass-bar .dropdown-menu {
+    border: 1px solid #111;
+    border-radius: 0;
+}
+
+.navbar-spacer {
+    height: 76px;
+}
+
+@media (max-width: 991.98px) {
+    .glass-bar .navbar-collapse {
+        margin-top: 0.75rem;
+        padding: 1rem;
+        background: #fff;
+        border: 1px solid #111;
+    }
+
+    .navbar-spacer {
+        height: 72px;
+    }
+}
+/*============================*/
+
 .bg-violet {
     background-color: rgb(92, 2, 92);
 }
@@ -25,6 +96,166 @@ body {
 .project-card {
     border-radius: 12px;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.project-live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0.5rem;
+    padding: 0.55rem 1rem;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-live-link:hover {
+    background: #fff;
+    color: #111;
+}
+
+/* Anteprima immagini nel form create/edit */
+.image-preview {
+    position: relative;
+}
+
+.image-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #111;
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #111;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.image-remove-btn:hover {
+    color: #fff;
+    background: #111;
+}
+
+/* Link YouTube in evidenza nella pagina show */
+.project-video-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-video-link:hover {
+    background: #fff;
+    color: #111;
+}
+
+.project-video-link-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.project-video-link-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.project-video-link-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.project-video-link-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    word-break: break-all;
+    opacity: 0.75;
+}
+
+.project-video-link-arrow {
+    margin-left: auto;
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+/* Gallery nella pagina show */
+.project-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+.project-gallery-thumb {
+    padding: 0;
+    background: transparent;
+    border: 1px solid #111;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.project-gallery-thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform 0.15s ease;
+}
+
+.project-gallery-thumb:hover img,
+.project-gallery-thumb:focus-visible img {
+    transform: scale(1.05);
+}
+
+.project-gallery-thumb:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+}
+
+.project-gallery-modal {
+    border: 1px solid #111;
+    border-radius: 0;
+    background: #000;
+    color: #fff;
+}
+
+.project-gallery-carousel-image {
+    max-height: 75vh;
+    object-fit: contain;
+    background: #000;
+}
+
+.project-gallery-caption {
+    background: rgba(0, 0, 0, 0.55);
 }
 
 .project-card:hover {
@@ -40,3 +271,99 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/*====== BACKOFFICE =====*/
+.backoffice-intro {
+    max-width: 58rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #111;
+}
+
+.backoffice-kicker {
+    margin-bottom: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #666;
+}
+
+.backoffice-intro p:last-child {
+    margin-bottom: 0;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.backoffice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+}
+
+.backoffice-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.75rem;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+}
+
+.backoffice-card-body {
+    flex: 1;
+}
+
+.backoffice-card h2 {
+    margin-bottom: 1rem;
+    font-size: 1.35rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.backoffice-card p {
+    margin-bottom: 0;
+    color: #555;
+    line-height: 1.7;
+}
+
+.backoffice-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.bko-btn {
+    display: inline-block;
+    padding: 0.65rem 1.1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    background: #111;
+    border: 1px solid #111;
+    border-radius: 0;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.bko-btn:hover {
+    color: #111;
+    background: #fff;
+}
+
+.bko-btn-outline {
+    color: #111;
+    background: transparent;
+}
+
+.bko-btn-outline:hover {
+    color: #fff;
+    background: #111;
+}
+/*========================*/

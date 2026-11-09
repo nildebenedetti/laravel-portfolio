@@ -6,17 +6,42 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
+
+    public const STACK_FULL = 'full_stack';
+    public const STACK_FRONT = 'front_end';
+    public const STACK_BACK = 'back_end';
+
+    public static function getStackTypes(): array
+    {
+        return [
+            self::STACK_FULL => 'Full Stack',
+            self::STACK_FRONT => 'Frontend',
+            self::STACK_BACK => 'Backend',
+        ];
+    }
+
     protected $fillable = [
         'title',
         'type_id',
         'github_link',
-        'tech_stack',
+        'frontend_github_link',
+        'backend_github_link',
         'client',
+        'live_link',
         'description',
         'image',
+        'image_pt_1',
+        'image_pt_2',
+        'image_pt_3',
+        'image_pt_4',
         'alt_text',
+        'alt_text_pt_1',
+        'alt_text_pt_2',
+        'alt_text_pt_3',
+        'alt_text_pt_4',
         'video_ID',
         'date',
+        'stack_type',
 
     ];
 

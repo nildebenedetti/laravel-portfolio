@@ -1,6 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $stackTypes = \App\Models\Project::getStackTypes();
+    $stackLabel = $stackTypes[$project->stack_type] ?? $project->stack_type;
+
+    // main image + secondary images, used by the gallery
+    $galleryImages = [];
+
+    if ($project->image) {
+        $galleryImages[] = [
+            'path' => $project->image,
+            'alt' => $project->alt_text ?: $project->title,
+        ];
+    }
+
+    for ($i = 1; $i <= 4; $i++) {
+        $imagePath = $project->{'image_pt_' . $i};
+
+        if ($imagePath) {
+            $galleryImages[] = [
+                'path' => $imagePath,
+                'alt' => $project->{'alt_text_pt_' . $i} ?: $project->title . ' - image ' . $i,
+            ];
+        }
+    }
+@endphp
+
 <div class="container py-5">
     
     <!-- Back Button -->
@@ -20,7 +46,7 @@
 
     <div class="row g-4 justify-content-center">
         
-        <!-- Main Column: Description and GitHub Call to Action -->
+        <!-- Main Column: Description and Links -->
         <div class="col-lg-8">
             <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4">
                 
@@ -33,14 +59,27 @@
                             {{ $project->title }}
                         </h1>
                         <h5 class="text-secondary"> 
-                            {{ $project->type->name }}
+                            {{ $project->type?->name }}
                         </h5>
+
+                        @if($project->live_link)
+                            <a href="{{ $project->live_link }}" target="_blank" rel="noopener noreferrer" class="project-live-link">
+                                Live Website
+                                <span aria-hidden="true">&nearr;</span>
+                            </a>
+                        @endif
+
                         <div class="d-flex flex-column align-items-start justify-content-start gap-2 mb-2">
                             <span class="text-secondary">
                                 Client: {{ $project->client }}
                             </span>
+                            @if($stackLabel)
+                                <span class="text-secondary">
+                                    Stack: {{ $stackLabel }}
+                                </span>
+                            @endif
                         </div>
-                        <div class="d-flex gap-2 mb-2">
+                        <div class="d-flex flex-wrap gap-2 mb-2">
                             <!-- tech stack -->
                             @if(count($project->technologies) > 0)
                             @foreach($project->technologies as $technology)
@@ -54,26 +93,82 @@
                     </div>
                 </div>
 
-                <!-- image -->
-                @if($project->image)
-                <div class="container p-3">
-                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->alt_text }}" class="project-image img-fluid">
+                <!-- YouTube link in primo piano -->
+                @if($project->video_ID)
+                <div class="mb-4">
+                    <a
+                        href="https://www.youtube.com/watch?v={{ $project->video_ID }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-video-link"
+                    >
+                        <span class="project-video-link-icon" aria-hidden="true">
+                            <i class="bi bi-youtube"></i>
+                        </span>
+                        <span class="project-video-link-body">
+                            <span class="project-video-link-title">Watch the project video on YouTube</span>
+                            <span class="project-video-link-url">https://www.youtube.com/watch?v={{ $project->video_ID }}</span>
+                        </span>
+                        <span class="project-video-link-arrow" aria-hidden="true">&nearr;</span>
+                    </a>
                 </div>
                 @endif
 
-                <!-- GitHub Repository Box -->
+                <!-- Gallery -->
+                @if(count($galleryImages) > 0)
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-3 text-dark">Gallery</h4>
+                    <div class="project-gallery-grid">
+                        @foreach($galleryImages as $index => $galleryImage)
+                            <button
+                                type="button"
+                                class="project-gallery-thumb"
+                                data-gallery-thumb="{{ $index }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#projectGalleryModal"
+                                aria-label="Open image {{ $index + 1 }} of {{ count($galleryImages) }}"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $galleryImage['path']) }}"
+                                    alt="{{ $galleryImage['alt'] }}"
+                                    loading="lazy"
+                                >
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                <!-- Project Links -->
+                @if($project->live_link || $project->github_link || $project->frontend_github_link || $project->backend_github_link)
                 <div class="bg-light p-4 rounded-3 border mb-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
                     <div>
-                        <h5 class="mb-1 fw-bold text-dark">Project Repository</h5>
-                        <p class="text-muted small mb-0">Inspect the full source code on GitHub.</p>
+                        <h5 class="mb-1 fw-bold text-dark">Project Links</h5>
+                        <p class="text-muted small mb-0">Inspect the source code.</p>
                     </div>
-                    <a href="{{ $project->github_link }}" 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        class="btn btn-dark btn-lg px-4 shadow-sm flex-shrink-0">
-                        View on GitHub
-                    </a>
+                    <div class="d-flex flex-wrap justify-content-center justify-content-md-end gap-2 flex-shrink-0">
+                        
+
+                        @if($project->github_link)
+                            <a href="{{ $project->github_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
+                                GitHub
+                            </a>
+                        @endif
+
+                        @if($project->frontend_github_link)
+                            <a href="{{ $project->frontend_github_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
+                                Frontend GitHub
+                            </a>
+                        @endif
+
+                        @if($project->backend_github_link)
+                            <a href="{{ $project->backend_github_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
+                                Backend GitHub
+                            </a>
+                        @endif
+                    </div>
                 </div>
+                @endif
 
                 <!-- Full Description -->
                 <div>
@@ -98,25 +193,66 @@
                         <span class="fw-semibold text-dark">{{ $project->title }}</span>
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block">Category</small>
+                        <span class="fw-semibold text-dark">{{ $project->type?->name }}</span>
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 py-3">
                         <small class="text-muted d-block">Client</small>
                         <span class="fw-semibold text-dark">{{ $project->client }}</span>
                     </li>
                     <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block">Stack Type</small>
+                        <span class="fw-semibold text-dark">{{ $stackLabel }}</span>
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block">Date</small>
+                        <span class="fw-semibold text-dark">{{ $project->date }}</span>
+                    </li>
+                    <li class="list-group-item bg-transparent px-0 py-3">
                         <small class="text-muted d-block">Tech Stack</small>
                         <span class="fw-semibold text-dark">
-                            @foreach ($project->technologies as $technology)
+                            @forelse ($project->technologies as $technology)
                                 {{ $technology->name }}{{ $loop->last? "" : " · "}}
-                            @endforeach
+                            @empty
+                                <span class="text-muted">Nessuna tecnologia</span>
+                            @endforelse
                         </span>
                     </li>
-                    <li class="list-group-item bg-transparent px-0 py-3 border-bottom-0">
-                        <small class="text-muted d-block mb-1">Direct Link</small>
-                        <a href="{{ $project->github_link }}" target="_blank" class="text-break small">
-                            {{ $project->{'github link'} }}
+                    @if($project->live_link)
+                    <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block mb-1">Live Website</small>
+                        <a href="{{ $project->live_link }}" target="_blank" rel="noopener noreferrer" class="text-break small">
+                            {{ $project->live_link }}
                         </a>
                     </li>
+                    @endif
+                    @if($project->github_link)
+                    <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block mb-1">GitHub</small>
+                        <a href="{{ $project->github_link }}" target="_blank" rel="noopener noreferrer" class="text-break small">
+                            {{ $project->github_link }}
+                        </a>
+                    </li>
+                    @endif
+                    @if($project->frontend_github_link)
+                    <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block mb-1">Frontend GitHub</small>
+                        <a href="{{ $project->frontend_github_link }}" target="_blank" rel="noopener noreferrer" class="text-break small">
+                            {{ $project->frontend_github_link }}
+                        </a>
+                    </li>
+                    @endif
+                    @if($project->backend_github_link)
+                    <li class="list-group-item bg-transparent px-0 py-3">
+                        <small class="text-muted d-block mb-1">Backend GitHub</small>
+                        <a href="{{ $project->backend_github_link }}" target="_blank" rel="noopener noreferrer" class="text-break small">
+                            {{ $project->backend_github_link }}
+                        </a>
+                    </li>
+                    @endif
                 </ul>
             </div>
+        </div>
     </div>
 </div>
 

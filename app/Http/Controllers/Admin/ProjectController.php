@@ -38,40 +38,86 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {   
+        $request->validate($this->imageValidationRules());
+
         $data = $request->all(); // save request data in associative array
         
         $newProject = new Project; // instantiate new row in db for Project Table
         $newProject->title = $data['title']; //assign saved data to field
         $newProject->type_id = $data['type_id'];
-        $newProject->github_link = $data['github_link'];
-        $newProject->client = $data['client'];
+        $newProject->stack_type = $data['stack_type'];      
         $newProject->description = $data['description'];
         $newProject->video_ID = $data['video_ID'];
         $newProject->date = $data['date'];
 
+        // handle stack_type
+        // if stacktype is full_stack, we store frontend and backend github link
+        // if is either frontend or backend we store just github link
 
-        // if any image exists, save it
+        if ( $data['stack_type'] === Project::STACK_FULL ) {
+
+            $newProject->frontend_github_link = $data['frontend_github_link'] ?? null;
+            $newProject->backend_github_link = $data['backend_github_link'] ?? null;
+
+        } elseif ($data['stack_type'] === Project::STACK_FRONT || $data['stack_type'] === Project::STACK_BACK ) {
+            $newProject->github_link = $data['github_link'] ?? null;
+        }
+
+
+        if (array_key_exists('client', $data) ) {
+            $newProject->client = $data['client'];
+        }
+
+        if ( array_key_exists('live_link', $data)) {
+                $newProject->live_link = $data['live_link'];
+        }
+
+        // if main image exists, save it
         if(array_key_exists('image', $data)) {
             $img_path = Storage::putFile('projects', $data['image']);
             $newProject->image = $img_path;
+        }
+
+        // same for secondary images
+        if (array_key_exists('image_pt_1', $data)) {
+            $img_path_pt_first = Storage::putfile('projects', $data['image_pt_1']);
+            $newProject->image_pt_1= $img_path_pt_first;
+        }
+
+        
+        if (array_key_exists('image_pt_2', $data)) {
+            $img_path_pt_second = Storage::putfile('projects', $data['image_pt_2']);
+            $newProject->image_pt_2= $img_path_pt_second;
+        }
+
+        if (array_key_exists('image_pt_3', $data)) {
+            $img_path_pt_third = Storage::putfile('projects', $data['image_pt_3']);
+            $newProject->image_pt_3= $img_path_pt_third;
+        }
+
+        if (array_key_exists('image_pt_4', $data)) {
+            $img_path_pt_fourth = Storage::putfile('projects', $data['image_pt_4']);
+            $newProject->image_pt_4= $img_path_pt_fourth;
         }
 
         if(array_key_exists('alt_text', $data)) {
             $newProject->alt_text = $data['alt_text'];
         }
 
-        $newProject->save(); // save in the db
+        // alt text for the secondary images
+        foreach ([1, 2, 3, 4] as $index) {
+            $altTextField = "alt_text_pt_{$index}";
 
-        if (isset($request['technologies'])) {
-            $newProject->technologies()->attach($data['technologies']);
+            if (array_key_exists($altTextField, $data)) {
+                $newProject->{$altTextField} = $data[$altTextField];
+            }
         }
 
-        // Notice: after saving the post
-        $newProject->technologies()->attach($data['technologies']); 
-        // we are appending the array we created in checkbox inputs
-        // CONTAINING TECHNOLOGIES IDS 
-        // which needs to be associated in the pivot table
-        // to the id of the new project instantiated
+        $newProject->save(); // save in the db
+
+        if (!empty($data['technologies'])) {
+            $newProject->technologies()->attach($data['technologies']);
+        }
 
         return redirect()->route("projects.show", $newProject); //return redirect to show post page
 
@@ -101,7 +147,31 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
 
+        $request->validate($this->imageValidationRules());
+
         $data = $request->all(); //extract data from request
+
+        // never overwrite existing images with empty file inputs
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if (! $request->hasFile($imageField)) {
+                unset($data[$imageField]);
+            }
+        }
+
+        // remove images explicitly cleared with the X button
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            $removeFlag = "remove_{$imageField}";
+
+            if ($request->boolean($removeFlag) && ! $request->hasFile($imageField)) {
+                if ($project->{$imageField}) {
+                    Storage::delete($project->{$imageField});
+                }
+
+                $data[$imageField] = null;
+            }
+
+            unset($data[$removeFlag]);
+        }
 
         // manipulate array in case an image is present
 
@@ -121,6 +191,29 @@ class ProjectController extends Controller
             
         }
 
+        // handle secondary images: replace the file and remove the old one
+        foreach (['image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if ($request->hasFile($imageField)) {
+
+                if ($project->{$imageField}) {
+                    Storage::delete($project->{$imageField});
+                }
+
+                $data[$imageField] = Storage::putFile('projects', $request->file($imageField));
+            }
+        }
+
+        // remove the links that do not belong to the selected stack type,
+        // so switching stack type does not leave stale links in the database
+        $stackType = $data['stack_type'] ?? null;
+
+        if ($stackType === Project::STACK_FULL) {
+            $data['github_link'] = null;
+        } elseif ($stackType === Project::STACK_FRONT || $stackType === Project::STACK_BACK) {
+            $data['frontend_github_link'] = null;
+            $data['backend_github_link'] = null;
+        }
+
         // then update all fields with update method
 
         $project->update($data);
@@ -130,21 +223,30 @@ class ProjectController extends Controller
         // a new row in db, which is NOT needed
 
         // We need to sync the pivot table
-        // ALTERNATIVE 1
-        $project->technologies()->sync($data['technologies'] ?? []);
+        $project->technologies()->sync($request->input('technologies', []));
         // if not present, empty array
-
-        // ALTERNATIVE 2
-        // this explicit version also work - shown detach() method
-
-        // if (isset($data['technologies'])) {
-        //     $project->technologies()->sync($data['technologies']);
-        // } else {
-        //     $project->technologies()->detach();
-        // }
 
         // after that we proceed redirecting
         return redirect()->route('projects.show', $project);
+    }
+
+    /**
+     * Server-side safety net for uploads.
+     *
+     * PHP in this project allows 2M per file and 8M per request, so a single
+     * image can never be larger than 2 MB. Requests bigger than post_max_size
+     * are rejected by PHP before Laravel runs; the browser-side checks in
+     * resources/js/image-preview.js prevent that from happening.
+     */
+    private function imageValidationRules(): array
+    {
+        $rules = [];
+
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $field) {
+            $rules[$field] = ['nullable', 'image', 'max:2048'];
+        }
+
+        return $rules;
     }
 
     /**
@@ -156,11 +258,11 @@ class ProjectController extends Controller
         // in order to prevent crashhh
         $project->technologies()->detach();
 
-        // remove image from storage if present
-        if ($project->image) {
-        
-            Storage::delete($project->image);
-
+        // remove main and secondary images from storage if present
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            if ($project->{$imageField}) {
+                Storage::delete($project->{$imageField});
+            }
         }
 
         $project->delete();

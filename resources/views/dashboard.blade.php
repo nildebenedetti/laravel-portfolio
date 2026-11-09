@@ -1,26 +1,62 @@
-@extends('layouts.app')
+@extends("layouts.app")
 
-@section('content')
-<div class="container">
-    <h2 class="fs-4 text-secondary my-4">
-        {{ __('Dashboard') }}
-    </h2>
-    <div class="row justify-content-center">
-        <div class="col">
-            <div class="card">
-                <div class="card-header">{{ __('User Dashboard') }}</div>
+@section("title", "Backoffice")
 
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
+@section("content")
+<div class="backoffice p-4">
+    {{-- Introduzione --}}
+    <div class="backoffice-intro">
+        <p class="backoffice-kicker">RESERVED DASHBOARD </p>
+        <p>
+            Use this area and resources to handle and organize content. <br/>This will condition what is displayed live on your portfolio: act carefully to preserve your public image...
+        </p>
+    </div>
 
-                    {{ __('You are logged in!') }}
-                </div>
+    {{-- Risorse del backoffice --}}
+    <div class="backoffice-grid">
+        {{-- Progetti --}}
+        <article class="backoffice-card">
+            <div class="backoffice-card-body">
+                <h2>Projects</h2>
+                <p>
+                    Create, edit and delete projects in the portfolio and handle what is displayed live.
+                </p>
             </div>
-        </div>
+            <div class="backoffice-card-actions">
+                <a href="{{ route('projects.index') }}" class="bko-btn">Handle</a>
+                <a href="{{ route('projects.create') }}" class="bko-btn bko-btn-outline">New +</a>
+            </div>
+        </article>
+
+        {{-- Tecnologie --}}
+        <article class="backoffice-card">
+            <div class="backoffice-card-body">
+                <h2>Technologies</h2>
+                <p>
+                    Handle technologies to be paired with projects (languages,
+                    framework, database...), with name and identifying color.
+                </p>
+            </div>
+            <div class="backoffice-card-actions">
+                <a href="{{ route('technologies.index') }}" class="bko-btn">Handle</a>
+                <a href="{{ route('technologies.create') }}" class="bko-btn bko-btn-outline">New +</a>
+            </div>
+        </article>
+
+        {{-- Typese --}}
+        <article class="backoffice-card">
+            <div class="backoffice-card-body">
+                <h2>Tipologie</h2>
+                <p>
+                    Handle project types (eCommerce, Showcase Website, API Service...)
+                    to classify and filter projects.
+                </p>
+            </div>
+            <div class="backoffice-card-actions">
+                <a href="{{ route('types.index') }}" class="bko-btn">Handle</a>
+                <a href="{{ route('types.create') }}" class="bko-btn bko-btn-outline">New +</a>
+            </div>
+        </article>
     </div>
 </div>
 @endsection
