@@ -8,7 +8,11 @@ export default defineConfig({
     plugins: [
         laravel({
             // edit the first value of the array input to point to our new sass files and folder.
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: [
+                'resources/css/app.css',
+                'resources/js/app.js',
+                'resources/images/logo/N-logo.png'
+            ],
             refresh: true,
         }),
     ],

@@ -13,6 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
+    @include('partials.header')
     <div class="container px-2 pt-4">
         <h1 class="px-2">
             @yield("title")
