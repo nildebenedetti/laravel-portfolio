@@ -50,24 +50,27 @@
             <input type="text" name="video_ID" id="video_ID" value="{{ old('video_ID', $project->video_ID) }}">
         </div>  
 
-        <!-- image input -->
-        <div class="col col-sm-12 mb-3 d-flex flex-wrap mx-4 mt-4 gap-3 align-items-baseline">
-            <label for="image">Add an image for your project.</label>
-            <input type="file" name="image" id="image" value="{{ $project->image ? $project->image : '' }}">
-        </div>
+        <!-- main image + alt text -->
+        <x-image-upload
+            name="image"
+            label="Add an image for your project."
+            alt-name="alt_text"
+            alt-label="Add a description for your image."
+            :existing="$project->image"
+            :alt-value="$project->alt_text"
+        />
 
-        <!-- image preview-->
-        @if($project->image)
-        <div class="container p-3">
-            <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->alt_text }}" class="project-image img-fluid w-25">
-        </div>
-        @endif
-
-        <!-- alt text image input -->
-        <div class="col col-sm-12 d-flex flex-column mb-3">
-            <label class="pb-3" for="alt_text">Add a description for your image.</label>
-            <input type="text" name="alt_text" id="alt_text"  value="{{ $project->alt_text ? $project->alt_text : '' }}">
-        </div> 
+        <!-- secondary images + alt text -->
+        @for($i = 1; $i <= 4; $i++)
+            <x-image-upload
+                :name="'image_pt_' . $i"
+                :label="'Add secondary image ' . $i"
+                :alt-name="'alt_text_pt_' . $i"
+                :alt-label="'Add a description for secondary image ' . $i"
+                :existing="$project->{'image_pt_' . $i}"
+                :alt-value="$project->{'alt_text_pt_' . $i}"
+            />
+        @endfor
 
         <!-- client -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column">

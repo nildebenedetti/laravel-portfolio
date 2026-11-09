@@ -38,6 +38,8 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {   
+        $request->validate($this->imageValidationRules());
+
         $data = $request->all(); // save request data in associative array
         
         $newProject = new Project; // instantiate new row in db for Project Table
@@ -145,6 +147,8 @@ class ProjectController extends Controller
     public function update(Request $request, Project $project)
     {
 
+        $request->validate($this->imageValidationRules());
+
         $data = $request->all(); //extract data from request
 
         // never overwrite existing images with empty file inputs
@@ -152,6 +156,21 @@ class ProjectController extends Controller
             if (! $request->hasFile($imageField)) {
                 unset($data[$imageField]);
             }
+        }
+
+        // remove images explicitly cleared with the X button
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $imageField) {
+            $removeFlag = "remove_{$imageField}";
+
+            if ($request->boolean($removeFlag) && ! $request->hasFile($imageField)) {
+                if ($project->{$imageField}) {
+                    Storage::delete($project->{$imageField});
+                }
+
+                $data[$imageField] = null;
+            }
+
+            unset($data[$removeFlag]);
         }
 
         // manipulate array in case an image is present
@@ -209,6 +228,25 @@ class ProjectController extends Controller
 
         // after that we proceed redirecting
         return redirect()->route('projects.show', $project);
+    }
+
+    /**
+     * Server-side safety net for uploads.
+     *
+     * PHP in this project allows 2M per file and 8M per request, so a single
+     * image can never be larger than 2 MB. Requests bigger than post_max_size
+     * are rejected by PHP before Laravel runs; the browser-side checks in
+     * resources/js/image-preview.js prevent that from happening.
+     */
+    private function imageValidationRules(): array
+    {
+        $rules = [];
+
+        foreach (['image', 'image_pt_1', 'image_pt_2', 'image_pt_3', 'image_pt_4'] as $field) {
+            $rules[$field] = ['nullable', 'image', 'max:2048'];
+        }
+
+        return $rules;
     }
 
     /**

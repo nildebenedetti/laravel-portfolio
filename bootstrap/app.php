@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -19,4 +20,16 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*') || $request->expectsJson(),
         );
+
+        // Requests above post_max_size (8M) never reach Laravel validation.
+        // Show a friendly message instead of the raw 413 error page.
+        $exceptions->render(function (PostTooLargeException $e, Request $request) {
+            $message = 'The uploaded files are too large. Each image must be 2 MB or less and the total upload must stay under 8 MB.';
+
+            if ($request->expectsJson()) {
+                return response()->json(['message' => $message], 413);
+            }
+
+            return redirect()->back()->withErrors(['image' => $message]);
+        });
     })->create();

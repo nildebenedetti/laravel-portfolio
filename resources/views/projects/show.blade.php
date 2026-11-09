@@ -4,6 +4,27 @@
 @php
     $stackTypes = \App\Models\Project::getStackTypes();
     $stackLabel = $stackTypes[$project->stack_type] ?? $project->stack_type;
+
+    // main image + secondary images, used by the gallery
+    $galleryImages = [];
+
+    if ($project->image) {
+        $galleryImages[] = [
+            'path' => $project->image,
+            'alt' => $project->alt_text ?: $project->title,
+        ];
+    }
+
+    for ($i = 1; $i <= 4; $i++) {
+        $imagePath = $project->{'image_pt_' . $i};
+
+        if ($imagePath) {
+            $galleryImages[] = [
+                'path' => $imagePath,
+                'alt' => $project->{'alt_text_pt_' . $i} ?: $project->title . ' - image ' . $i,
+            ];
+        }
+    }
 @endphp
 
 <div class="container py-5">
@@ -72,10 +93,49 @@
                     </div>
                 </div>
 
-                <!-- image -->
-                @if($project->image)
-                <div class="container p-3">
-                    <img src="{{ asset('storage/' . $project->image) }}" alt="{{ $project->alt_text }}" class="project-image img-fluid">
+                <!-- YouTube link in primo piano -->
+                @if($project->video_ID)
+                <div class="mb-4">
+                    <a
+                        href="https://www.youtube.com/watch?v={{ $project->video_ID }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="project-video-link"
+                    >
+                        <span class="project-video-link-icon" aria-hidden="true">
+                            <i class="bi bi-youtube"></i>
+                        </span>
+                        <span class="project-video-link-body">
+                            <span class="project-video-link-title">Watch the project video on YouTube</span>
+                            <span class="project-video-link-url">https://www.youtube.com/watch?v={{ $project->video_ID }}</span>
+                        </span>
+                        <span class="project-video-link-arrow" aria-hidden="true">&nearr;</span>
+                    </a>
+                </div>
+                @endif
+
+                <!-- Gallery -->
+                @if(count($galleryImages) > 0)
+                <div class="mb-4">
+                    <h4 class="fw-bold mb-3 text-dark">Gallery</h4>
+                    <div class="project-gallery-grid">
+                        @foreach($galleryImages as $index => $galleryImage)
+                            <button
+                                type="button"
+                                class="project-gallery-thumb"
+                                data-gallery-thumb="{{ $index }}"
+                                data-bs-toggle="modal"
+                                data-bs-target="#projectGalleryModal"
+                                aria-label="Open image {{ $index + 1 }} of {{ count($galleryImages) }}"
+                            >
+                                <img
+                                    src="{{ asset('storage/' . $galleryImage['path']) }}"
+                                    alt="{{ $galleryImage['alt'] }}"
+                                    loading="lazy"
+                                >
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
                 @endif
 
@@ -84,14 +144,10 @@
                 <div class="bg-light p-4 rounded-3 border mb-4 text-center text-md-start d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
                     <div>
                         <h5 class="mb-1 fw-bold text-dark">Project Links</h5>
-                        <p class="text-muted small mb-0">Visit the live project or inspect the source code.</p>
+                        <p class="text-muted small mb-0">Inspect the source code.</p>
                     </div>
                     <div class="d-flex flex-wrap justify-content-center justify-content-md-end gap-2 flex-shrink-0">
-                        @if($project->live_link)
-                            <a href="{{ $project->live_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-dark">
-                                Live Website
-                            </a>
-                        @endif
+                        
 
                         @if($project->github_link)
                             <a href="{{ $project->github_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-dark">
@@ -110,21 +166,6 @@
                                 Backend GitHub
                             </a>
                         @endif
-                    </div>
-                </div>
-                @endif
-
-                <!-- Project Video -->
-                @if($project->video_ID)
-                <div class="mb-4">
-                    <h4 class="fw-bold mb-3 text-dark">Project Video</h4>
-                    <div class="ratio ratio-16x9">
-                        <iframe
-                            src="https://www.youtube.com/embed/{{ $project->video_ID }}"
-                            title="Video del progetto {{ $project->title }}"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
                     </div>
                 </div>
                 @endif

@@ -121,6 +121,143 @@ body {
     color: #111;
 }
 
+/* Anteprima immagini nel form create/edit */
+.image-preview {
+    position: relative;
+}
+
+.image-preview img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid #111;
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: 0.35rem;
+    right: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    color: #111;
+    background: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.image-remove-btn:hover {
+    color: #fff;
+    background: #111;
+}
+
+/* Link YouTube in evidenza nella pagina show */
+.project-video-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-video-link:hover {
+    background: #fff;
+    color: #111;
+}
+
+.project-video-link-icon {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.project-video-link-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-width: 0;
+}
+
+.project-video-link-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.project-video-link-url {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    word-break: break-all;
+    opacity: 0.75;
+}
+
+.project-video-link-arrow {
+    margin-left: auto;
+    font-size: 1.75rem;
+    line-height: 1;
+}
+
+/* Gallery nella pagina show */
+.project-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 0.75rem;
+}
+
+.project-gallery-thumb {
+    padding: 0;
+    background: transparent;
+    border: 1px solid #111;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.project-gallery-thumb img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    transition: transform 0.15s ease;
+}
+
+.project-gallery-thumb:hover img,
+.project-gallery-thumb:focus-visible img {
+    transform: scale(1.05);
+}
+
+.project-gallery-thumb:focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+}
+
+.project-gallery-modal {
+    border: 1px solid #111;
+    border-radius: 0;
+    background: #000;
+    color: #fff;
+}
+
+.project-gallery-carousel-image {
+    max-height: 75vh;
+    object-fit: contain;
+    background: #000;
+}
+
+.project-gallery-caption {
+    background: rgba(0, 0, 0, 0.55);
+}
+
 .project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
