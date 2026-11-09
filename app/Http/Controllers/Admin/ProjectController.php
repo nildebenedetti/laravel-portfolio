@@ -102,6 +102,15 @@ class ProjectController extends Controller
             $newProject->alt_text = $data['alt_text'];
         }
 
+        // alt text for the secondary images
+        foreach ([1, 2, 3, 4] as $index) {
+            $altTextField = "alt_text_pt_{$index}";
+
+            if (array_key_exists($altTextField, $data)) {
+                $newProject->{$altTextField} = $data[$altTextField];
+            }
+        }
+
         $newProject->save(); // save in the db
 
         if (!empty($data['technologies'])) {
