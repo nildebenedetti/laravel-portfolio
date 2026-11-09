@@ -98,6 +98,29 @@ body {
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+.project-live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.75rem 0 0.5rem;
+    padding: 0.55rem 1rem;
+    background: #111;
+    color: #fff;
+    border: 1px solid #111;
+    border-radius: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.project-live-link:hover {
+    background: #fff;
+    color: #111;
+}
+
 .project-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
