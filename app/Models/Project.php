@@ -24,13 +24,16 @@ class Project extends Model
         'title',
         'type_id',
         'github_link',
-        'tech_stack',
+        'frontend_github_link',
+        'backend_github_link',
         'client',
+        'live_link,',
         'description',
         'image',
         'alt_text',
         'video_ID',
         'date',
+        'stack_type',
 
     ];
 
