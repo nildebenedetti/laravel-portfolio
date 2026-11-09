@@ -13,7 +13,7 @@ class ProjectController extends Controller
     public function index() {
 
         // Extract necessary info to be provided by API
-        $projects = Project::with('type')->get(); //with() executes the eager loading for 
+        $projects = Project::with('type', 'technologies')->get(); //with() executes the eager loading for 
         // many-to-one relationship btw Projects and Type
 
         // return a JSON file <3 
