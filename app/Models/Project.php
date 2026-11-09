@@ -27,7 +27,7 @@ class Project extends Model
         'frontend_github_link',
         'backend_github_link',
         'client',
-        'live_link,',
+        'live_link',
         'description',
         'image',
         'alt_text',

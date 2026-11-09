@@ -102,13 +102,13 @@
         <!-- frontend github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_front_end_github_link">
             <label for="front_end_github_link" class="py-2">Frontend Github Link</label>
-            <input type="text" id="front_end_github_link" name="front_end_github_link" value="{{ old('frontend_github_link', $project->frontend_github_link ? $project->frontend_github_link : '') }}">
+            <input type="text" id="front_end_github_link" name="frontend_github_link" value="{{ old('frontend_github_link', $project->frontend_github_link ? $project->frontend_github_link : '') }}">
         </div>
 
         <!-- backend github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_back_end_github_link">
             <label for="back_end_github_link" class="py-2">Backend Github Link</label>
-            <input type="text" id="back_end_github_link" name="back_end_github_link" value="{{ old('backend_github_link', $project->backend_github_link ? $project->backend_github_link : '') }}">
+            <input type="text" id="back_end_github_link" name="backend_github_link" value="{{ old('backend_github_link', $project->backend_github_link ? $project->backend_github_link : '') }}">
         </div>
         
         <!-- description -->

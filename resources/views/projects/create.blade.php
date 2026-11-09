@@ -27,7 +27,7 @@
         <!-- technologies -->
         <div class="col-sm-12 mb-3 d-flex flex-wrap gap-2 px-4 mt-4">
             @foreach($technologies as $technology)
-                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="$tech-{{ $technology->id }}">
+                <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" id="tech-{{ $technology->id }}">
                 <label for="tech-{{ $technology->id }}">{{ $technology->name }}</label>
             @endforeach
 
@@ -76,7 +76,7 @@
             <label for="stack_type" class="py-2">Stack Type</label>
             <select name="stack_type" id="stack_type" class="py-1" required>
                 @foreach(App\Models\Project::getStackTypes() as $key => $label )
-                <option value="{{ $key }}" {{ old('stack_type', $project->stack_type ?? '') === $key ? 'selected' : '' }}>
+                <option value="{{ $key }}" {{ old('stack_type') === $key ? 'selected' : '' }}>
                     {{ $label }}
                 </option>
                 @endforeach
@@ -92,13 +92,13 @@
         <!-- frontend github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_front_end_github_link">
             <label for="front_end_github_link" class="py-2">Frontend Github Link</label>
-            <input type="text" id="front_end_github_link" name="front_end_github_link">
+            <input type="text" id="front_end_github_link" name="frontend_github_link">
         </div>
 
         <!-- backend github link -->
         <div class="col col-sm-12 col-lg-6 d-flex flex-column d-none" id="group_back_end_github_link">
             <label for="back_end_github_link" class="py-2">Backend Github Link</label>
-            <input type="text" id="back_end_github_link" name="back_end_github_link">
+            <input type="text" id="back_end_github_link" name="backend_github_link">
         </div>
 
         <!-- description -->

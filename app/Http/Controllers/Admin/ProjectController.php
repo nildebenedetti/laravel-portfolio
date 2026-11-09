@@ -43,12 +43,32 @@ class ProjectController extends Controller
         $newProject = new Project; // instantiate new row in db for Project Table
         $newProject->title = $data['title']; //assign saved data to field
         $newProject->type_id = $data['type_id'];
-        $newProject->github_link = $data['github_link'];
-        $newProject->client = $data['client'];
+        $newProject->stack_type = $data['stack_type'];      
         $newProject->description = $data['description'];
         $newProject->video_ID = $data['video_ID'];
         $newProject->date = $data['date'];
 
+        // handle stack_type
+        // if stacktype is full_stack, we store frontend and backend github link
+        // if is either frontend or backend we store just github link
+
+        if ( $data['stack_type'] === Project::STACK_FULL ) {
+
+            $newProject->frontend_github_link = $data['frontend_github_link'] ?? null;
+            $newProject->backend_github_link = $data['backend_github_link'] ?? null;
+
+        } elseif ($data['stack_type'] === Project::STACK_FRONT || $data['stack_type'] === Project::STACK_BACK ) {
+            $newProject->github_link = $data['github_link'] ?? null;
+        }
+
+
+        if (array_key_exists('client', $data) ) {
+            $newProject->client = $data['client'];
+        }
+
+        if ( array_key_exists('live_link', $data)) {
+                $newProject->live_link = $data['live_link'];
+        }
 
         // if any image exists, save it
         if(array_key_exists('image', $data)) {
@@ -62,16 +82,9 @@ class ProjectController extends Controller
 
         $newProject->save(); // save in the db
 
-        if (isset($request['technologies'])) {
+        if (!empty($data['technologies'])) {
             $newProject->technologies()->attach($data['technologies']);
         }
-
-        // Notice: after saving the post
-        $newProject->technologies()->attach($data['technologies']); 
-        // we are appending the array we created in checkbox inputs
-        // CONTAINING TECHNOLOGIES IDS 
-        // which needs to be associated in the pivot table
-        // to the id of the new project instantiated
 
         return redirect()->route("projects.show", $newProject); //return redirect to show post page
 
@@ -121,6 +134,17 @@ class ProjectController extends Controller
             
         }
 
+        // remove the links that do not belong to the selected stack type,
+        // so switching stack type does not leave stale links in the database
+        $stackType = $data['stack_type'] ?? null;
+
+        if ($stackType === Project::STACK_FULL) {
+            $data['github_link'] = null;
+        } elseif ($stackType === Project::STACK_FRONT || $stackType === Project::STACK_BACK) {
+            $data['frontend_github_link'] = null;
+            $data['backend_github_link'] = null;
+        }
+
         // then update all fields with update method
 
         $project->update($data);
@@ -130,18 +154,8 @@ class ProjectController extends Controller
         // a new row in db, which is NOT needed
 
         // We need to sync the pivot table
-        // ALTERNATIVE 1
-        $project->technologies()->sync($data['technologies'] ?? []);
+        $project->technologies()->sync($request->input('technologies', []));
         // if not present, empty array
-
-        // ALTERNATIVE 2
-        // this explicit version also work - shown detach() method
-
-        // if (isset($data['technologies'])) {
-        //     $project->technologies()->sync($data['technologies']);
-        // } else {
-        //     $project->technologies()->detach();
-        // }
 
         // after that we proceed redirecting
         return redirect()->route('projects.show', $project);
