@@ -55,7 +55,18 @@
             <label class="pb-3" for="alt_text">Add a description for your image.</label>
             <input type="text" name="alt_text" id="alt_text">
         </div> 
-        
+
+        <!-- client -->
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
+            <label for="client" class="py-2">Client (if any)</label>
+            <input type="text" id="client" name="client">
+        </div>
+        <!-- live link -->
+        <div class="col col-sm-12 col-lg-6 d-flex flex-column" id="group_live_link">
+            <label for="live_link" class="py-2">Website Link (if any)</label>
+            <input type="text" id="live_link" name="live_link">
+        </div>
+
         <!-- stack_type selection -->
         <div class="col col-sm-12 d-flex flex-column">
             <label for="stack_type" class="py-2">Stack Type</label>
@@ -86,11 +97,6 @@
             <input type="text" id="back_end_github_link" name="back_end_github_link">
         </div>
 
-        <!-- client -->
-        <div class="col col-sm-12 col-lg-6 d-flex flex-column">
-            <label for="client" class="py-2">Client</label>
-            <input type="text" id="client" name="client">
-        </div>
         <!-- description -->
         <div class="col col-sm-12 col-md-12 col-lg-12 d-flex flex-column">
             <label for="description" class="py-2">Description</label>
