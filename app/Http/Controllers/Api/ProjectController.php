@@ -28,9 +28,18 @@ class ProjectController extends Controller
     // 2. SHOW - Shall return a JSON containing ONE project 
     // corresponding to received id
     // complete with all related resources
-    public function show(Project $project) {
-        // extract desired data
-        $project->load('type', 'technologies');
+    public function show($id) {
+        // check if project is present
+        $project = Project::with('type', 'technologies')->find($id);
+
+        // if not, return error
+        if (!$project) {
+            return response()->json([
+                "success" => false,
+                "message" => "Project not found"
+            ], 404);
+        }
+
         // return JSON file
         return response()->json([
             "success" => true,
